@@ -1,46 +1,25 @@
-import { useSession } from "@/src/providers/auth";
-import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { logout } from "@/actions/auth";
+import { Button } from "@/components/Button";
+import { useAuthStore } from "@/stores/auth";
+import { Text, View } from "react-native";
 
 export default function Home() {
-    const { signOut } = useSession();
+    const user = useAuthStore.getState().user;
+
+    const logUser = () => {
+        console.log(user);
+    }
     return (
-        <View style={style.container}>
-            <Text style={style.text}>Home page</Text>
-            <Text
-                style={style.button}
-                onPress={() => {
-                    signOut();
-                }}
-            >
-                Sign Out
-            </Text>
+        <View className="flex-1 flex-col space-y-4 items-center justify-center bg-zinc-950">
+            <Text className="text-3xl text-zinc-50">Home page</Text>
+            <Button
+                label="Sign Out"
+                onPress={logout}
+            />
+            <Button
+                label="User"
+                onPress={logUser}
+            />
         </View>
     )
 }
-
-const style = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#25292e',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text: {
-        color: '#fff',
-    },
-    link: {
-        color: '#fff',
-        fontSize: 20,
-        marginTop: 20,
-        textDecorationLine: 'underline'
-    },
-    button: {
-        fontSize: 20,
-        color: '#fff',
-        backgroundColor: 'blue',
-        padding: 10,
-        borderRadius: 5,
-        marginTop: 20
-    }
-});

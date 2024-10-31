@@ -1,24 +1,17 @@
-import { useSession } from "@/src/providers/auth";
+import { useAuthStore } from "@/stores/auth";
 import { Redirect, Stack } from "expo-router";
 import { StyleSheet, Text } from "react-native";
 
 export default function AppLayout() {
-    const { session, isLoading } = useSession();
+    const { isLoggedIn } = useAuthStore();
 
-    if (isLoading) {
-        return <Text>Loading...</Text>;
-    }
-
-    if (!session) {
-        return <Redirect href="/login" />;
+    if (!isLoggedIn) {
+        return <Redirect href="/login" />
     }
 
     return (
         <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)/register" options={{ title: 'Register' }} />
-            <Stack.Screen name="+not-found" />
         </Stack>
     )
 }
