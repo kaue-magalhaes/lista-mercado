@@ -4,10 +4,11 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
-import { login } from "@/actions/auth";
+import { login } from "@/actions/auth/login";
 
 export default function Login() {
     const { control, handleSubmit, formState: { errors } } = useForm<LoginFormDataProps>();
+    
     const submit = async (data: LoginFormDataProps) => {
         try {
             data.device_name = `${Platform.OS} ${Platform.Version}`;
@@ -64,9 +65,10 @@ export default function Login() {
                 }}
             />
             <Button
-                label="Sign In"
                 onPress={handleSubmit(submit)}
-            />
+            >
+                <Text>Login</Text>
+            </Button>
         </View>
     )
 }

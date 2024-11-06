@@ -1,12 +1,15 @@
-import { getToken } from "@/actions/auth";
+import { getToken } from "@/actions/auth/token";
+import { Platform } from "react-native";
 
-const API_BASE_URL = 'http://localhost:8000';
-    
+const NGROK_URL = 'https://1ec6-2804-8d4-366-cf00-fc40-cb5c-c5ac-e20a.ngrok-free.app';
+const API_BASE_URL = Platform.OS === 'web' ? 'http://localhost:8000' : NGROK_URL;
+
 export async function fetchApi(url: string, options: RequestInit = {}) {
     const token = await getToken();
     
     let headers: HeadersInit_ = {
         'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
     };
     
     if (token) {
